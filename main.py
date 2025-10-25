@@ -13,14 +13,14 @@ app = FastAPI(title="Requirements Engineering Tool Prototype")
 
 
 origins = [
-    "http://localhost:5173",  # adjust this if your frontend runs elsewhere
+    "http://localhost:5173", 
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # allows GET, POST, etc.
+    allow_methods=["*"], 
     allow_headers=["*"],
 )
 
@@ -43,14 +43,13 @@ def get_stories(db: Session = Depends(get_db)):
             "description": story.Description,
             "assignee": story.Assignee,
             "status": story.Status,
-            "createdOn": story.CreatedOn.isoformat() # .isoformat() is good practice for datetimes
+            "createdOn": story.CreatedOn.isoformat() 
         }
         for story in stories
     ]
 
-    # 3. Return the newly formatted list
+    
     return formatted_stories
-
 
 @app.post("/stories")
 def add_story(request: schemas.StoryCreate, db: Session = Depends(get_db)):
