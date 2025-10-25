@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field   # ✅ this import is required
+from pydantic import BaseModel, Field 
 from typing import Optional
 
 class StoryCreate(BaseModel):
