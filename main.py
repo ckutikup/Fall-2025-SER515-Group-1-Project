@@ -13,14 +13,14 @@ app = FastAPI(title="Requirements Engineering Tool Prototype")
 
 
 origins = [
-    "http://localhost:5173", 
+    "http://localhost:5173",
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"], 
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -43,13 +43,13 @@ def get_stories(db: Session = Depends(get_db)):
             "description": story.Description,
             "assignee": story.Assignee,
             "status": story.Status,
-            "createdOn": story.CreatedOn.isoformat() 
+            "createdOn": story.CreatedOn.isoformat()
         }
         for story in stories
     ]
 
-    
     return formatted_stories
+
 
 @app.post("/stories")
 def add_story(request: schemas.StoryCreate, db: Session = Depends(get_db)):
@@ -62,6 +62,4 @@ def add_story(request: schemas.StoryCreate, db: Session = Depends(get_db)):
     db.add(new_story)
     db.commit()
     db.refresh(new_story)
-    return {
-        "message": "Story added successfully",
-    }
+    return {"message": "Story added successfully", "story": new_story}
